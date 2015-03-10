@@ -5,7 +5,8 @@
   "main": "./lib/bikesampaclient.js",
   "devDependencies": {
     "mocha": "1.8.1",
-    "nock": "0.42.1"
+    "nock": "0.42.1",
+    "underscore": "^1.8.2"
   },
   "scripts": {
     "test": "mocha --reporter spec --timeout 4000",

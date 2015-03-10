@@ -3,6 +3,9 @@
 var assert = require('assert');
 var nock = require('nock');
 var BikeSampaClient = require('../lib/bikesampaclient.js').BikeSampaClient;
+var fs = require('fs');
+var _ = require('underscore');
+var path = require('path');
 
 var client;
 
@@ -24,10 +27,33 @@ var TEST_STATION = {
     "statusEstacao": "Est_Normal 1"
 };
 
+function isTest(f) {
+  return (/\.test\.html$/).test(f);
+}
+
+function isExpectation(f) {
+  return (/\.expectation\.js$/).test(f);
+}
+
 describe('BikeSampaClient', function() {
+
+    var casefiles = [];
+    fs.readdirSync(__dirname + '/html-cases/').forEach(function (f) {
+      return casefiles.push(path.normalize(__dirname + '/html-cases/' + '/' + f));
+    });
+    
+    var tests = casefiles.filter(isTest);
+    tests.sort();
+    
+    var expectations = casefiles.filter(isExpectation);
+    expectations.sort();
+
+    var cases = _.zip(tests, expectations);
+
     beforeEach(function setupEachTest() {
         client = new BikeSampaClient();
     });
+
     describe('@_statusForStation', function() {
         it('should transform working status', function(){
             assert.equal('working', BikeSampaClient._statusForStation('A', 'EO'));
@@ -74,6 +100,19 @@ describe('BikeSampaClient', function() {
                     "availableBikes":1
             }, BikeSampaClient._normalizeStationModel(TEST_STATION));
         });
+    });
+
+    describe('@_sliceStationsInfoFromHtml', function() {
+        cases.forEach(function(cur){
+            var test = cur[0], exp = cur[1];
+            
+            var radical = _.last(exp.split(/\./)[0].split('/'));
+            it('should fetch only stations info #' + radical, function(){
+                var content = fs.readFileSync(test, {encoding: 'UTF-8'});
+                var expected = fs.readFileSync(exp, {encoding: 'UTF-8'});
+                assert.equal(BikeSampaClient._sliceStationsInfoFromHtml(content), expected);
+            });
+        })
     });
 
     describe('#getAll', function() {
