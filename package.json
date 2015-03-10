@@ -1,22 +1,25 @@
 {
-	"name": "bikesampa-client",
-	"version": "0.1.0",
-	"description": "API for BikeSampa stations usage and location",
-	"main": "./lib/bikesampaclient.js",
-	"devDependencies": {
-		"mocha": "1.8.1",
-		"nock": "0.42.1"
-	},
-	"scripts": {
-		"test": "mocha --reporter spec --timeout 4000",
-		"prepare": "npm test && npm version patch"
-	},
-	"author": "MTROVO",
-	"contributors": [
-	{
-		"name": "Moises Trovo",
-		"email": "moises.trovo@gmail.com"
-	}
-	],
-	"license": "Apache 2"
+  "name": "bikesampa-client",
+  "version": "0.1.0",
+  "description": "API for BikeSampa stations usage and location",
+  "main": "./lib/bikesampaclient.js",
+  "devDependencies": {
+    "mocha": "1.8.1",
+    "nock": "0.42.1"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec --timeout 4000",
+    "prepare": "npm test && npm version patch"
+  },
+  "author": "MTROVO",
+  "contributors": [
+    {
+      "name": "Moises Trovo",
+      "email": "moises.trovo@gmail.com"
+    }
+  ],
+  "license": "Apache 2",
+  "dependencies": {
+    "request": "^2.51.0"
+  }
 }
