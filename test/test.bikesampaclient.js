@@ -1,6 +1,5 @@
 'use strict';
 
-var assert = require('assert');
 var nock = require('nock');
 var BikeSampaClient = require('../lib/bikesampaclient.js').BikeSampaClient;
 var fs = require('fs');
@@ -57,38 +56,38 @@ describe('BikeSampaClient', function() {
 
     describe('@_statusForStation', function() {
         it('should transform working status', function(){
-            assert.equal('working', BikeSampaClient._statusForStation('A', 'EO'));
-            assert.notEqual('working', BikeSampaClient._statusForStation('I', 'EO'));
-            assert.notEqual('working', BikeSampaClient._statusForStation('A', 'I'));
+            expect(BikeSampaClient._statusForStation('A', 'EO')).to.equal('working');
+            expect(BikeSampaClient._statusForStation('I', 'EO')).not.to.equal('working');
+            expect(BikeSampaClient._statusForStation('A', 'I')).not.to.equal('working');
         });
         it('should transform maintenance status', function(){
-            assert.equal('maintenance', BikeSampaClient._statusForStation('A', 'EM'));
-            assert.equal('maintenance', BikeSampaClient._statusForStation('I', 'EM'));
+            expect(BikeSampaClient._statusForStation('A', 'EM')).to.equal('maintenance');
+            expect(BikeSampaClient._statusForStation('I', 'EM')).to.equal('maintenance');
         });
         it('should transform deploying status', function(){
-            assert.equal('deploying', BikeSampaClient._statusForStation('A', 'EI'));
-            assert.equal('deploying', BikeSampaClient._statusForStation('I', 'EI'));
+            expect(BikeSampaClient._statusForStation('A', 'EI')).to.equal('deploying');
+            expect(BikeSampaClient._statusForStation('I', 'EI')).to.equal('deploying');
         });
         it('should transform offline status', function(){
-            assert.equal('offline', BikeSampaClient._statusForStation('I', 'EO'));
+            expect(BikeSampaClient._statusForStation('I', 'EO')).to.equal('offline');
         });
     });
 
     describe('@_normalizeStationModel', function() {
         it('should transform acceptsBilheteUnico', function() {
-            assert.equal(true, BikeSampaClient._normalizeStationModel({estacaoIntegradaBU: 'S'}).acceptsBilheteUnico);
-            assert.equal(false, BikeSampaClient._normalizeStationModel({estacaoIntegradaBU: 'N'}).acceptsBilheteUnico);
+            expect(BikeSampaClient._normalizeStationModel({estacaoIntegradaBU: 'S'}).acceptsBilheteUnico).to.equal(true);
+            expect(BikeSampaClient._normalizeStationModel({estacaoIntegradaBU: 'N'}).acceptsBilheteUnico).to.equal(false);
         });
 
         it('should transform status', function() {
-            assert.equal('working', BikeSampaClient._normalizeStationModel({StatusOnline: "A", StatusOperacao:'EO'}).status);
-            assert.equal('maintenance', BikeSampaClient._normalizeStationModel({StatusOperacao:'EM'}).status);
-            assert.equal('deploying', BikeSampaClient._normalizeStationModel({StatusOperacao: 'EI'}).status);
-            assert.equal('offline', BikeSampaClient._normalizeStationModel({StatusOnline: "I",StatusOperacao: "EO"}).status);
+            expect(BikeSampaClient._normalizeStationModel({StatusOnline: "A", StatusOperacao:'EO'}).status).to.equal('working');
+            expect(BikeSampaClient._normalizeStationModel({StatusOperacao:'EM'}).status).to.equal('maintenance');
+            expect(BikeSampaClient._normalizeStationModel({StatusOperacao: 'EI'}).status).to.equal('deploying');
+            expect(BikeSampaClient._normalizeStationModel({StatusOnline: "I",StatusOperacao: "EO"}).status).to.equal('offline');
         });
 
         it('should transform full object', function(){
-            assert.deepEqual({
+            expect(BikeSampaClient._normalizeStationModel(TEST_STATION)).to.deep.equal({
                     "stationId":"1",
                     "name":"Instituto Biologico",
                     "address":"Rua Morgado de Mateus, em frente ao numero 652",
@@ -99,7 +98,7 @@ describe('BikeSampaClient', function() {
                     "acceptsBilheteUnico":false,
                     "freePositions":11,
                     "availableBikes":1
-            }, BikeSampaClient._normalizeStationModel(TEST_STATION));
+            });
         });
     });
     
@@ -108,7 +107,7 @@ describe('BikeSampaClient', function() {
             var func = fs.readFileSync(__dirname + '/html-cases/singlestation.expectation.js', {encoding:"UTF-8"});
             var stations = BikeSampaClient._buildObjectsFromStringFunc(func);
 
-            assert.deepEqual([{
+            expect(stations).to.deep.equal([{
                 "Endereco": "Rua Morgado de Mateus, em frente ao numero 652",
                 "IdEstacao": "1",
                 "Latitude": "-23.587315",
@@ -122,7 +121,7 @@ describe('BikeSampaClient', function() {
                 "estacaoIntegradaBU": "S",
                 "qtdBicicletasDisponiveisEstacao": "0",
                 "statusEstacao": null,
-            }], stations);
+            }]);
         });
     });
 
@@ -134,7 +133,7 @@ describe('BikeSampaClient', function() {
             it('should fetch only stations info #' + radical, function(){
                 var content = fs.readFileSync(test, {encoding: 'UTF-8'});
                 var expected = fs.readFileSync(exp, {encoding: 'UTF-8'});
-                assert.equal(BikeSampaClient._sliceStationsInfoFromHtml(content), expected);
+                expect(expected).to.equal(BikeSampaClient._sliceStationsInfoFromHtml(content));
             });
         })
     });

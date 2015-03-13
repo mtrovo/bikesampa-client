@@ -50,7 +50,7 @@ describe('CachedBikeSampaClient', function() {
             client.getAll(function(err, stations) {
                 if(err) done(err);
                 else{
-                    assert.equal(1, Object.keys(stations).length);
+                    expect(Object.keys(stations).length).to.equal(1);
                     assert.ok(stations['1']);
                     expect(stations['1']).to.deep.equal({
                         "stationId":"1",
@@ -64,7 +64,7 @@ describe('CachedBikeSampaClient', function() {
                         "freePositions":11,
                         "availableBikes":1
                     });
-                    assert.equal(stations, client.cache);
+                    expect(client.cache).to.equal(stations);
                     assert.ok(client.ttl != 0);
                     done();
                 }
@@ -78,7 +78,7 @@ describe('CachedBikeSampaClient', function() {
             client.getAll(function(err, stations) {
                 if(err) done(err);
                 else{
-                    assert.equal(1, Object.keys(stations).length);
+                    expect(Object.keys(stations).length).to.equal(1);
                     assert.ok(stations['1']);
                     expect(stations['1']).to.deep.equal({
                         "stationId":"1",
@@ -92,7 +92,7 @@ describe('CachedBikeSampaClient', function() {
                         "freePositions":11,
                         "availableBikes":1
                     });
-                    assert.equal(stations, client.cache);
+                    expect(client.cache).to.equal(stations);
                     assert.ok(client.lastModified != 0);
                     lastModified = client.lastModified;
 
@@ -100,7 +100,7 @@ describe('CachedBikeSampaClient', function() {
                     client.getAll(function(err, stations2) {
                         if(err) done(err);
                         else{
-                            assert.equal(1, Object.keys(stations2).length);
+                            expect(Object.keys(stations2).length).to.equal(1);
                             assert.ok(stations2['1']);
                             expect(stations2['1']).to.deep.equal({
                                 "stationId":"1",
@@ -114,8 +114,8 @@ describe('CachedBikeSampaClient', function() {
                                 "freePositions":11,
                                 "availableBikes":1
                             });
-                            assert.equal(stations2, client.cache);
-                            assert.equal(lastModified, client.lastModified);
+                            expect(client.cache).to.equal(stations2);
+                            expect(client.lastModified).to.equal(lastModified);
                             done();
                         }
                     });
@@ -132,7 +132,7 @@ describe('CachedBikeSampaClient', function() {
             client.getAll(function(err, stations) {
                 if(err) done(err);
                 else{
-                    assert.equal(1, Object.keys(stations).length);
+                    expect(Object.keys(stations).length).to.equal(1);
                     assert.ok(stations['1']);
                     expect(stations['1']).to.deep.equal({
                         "stationId":"1",
@@ -146,7 +146,7 @@ describe('CachedBikeSampaClient', function() {
                         "freePositions":11,
                         "availableBikes":1
                     });
-                    assert.equal(stations, client.cache);
+                    expect(client.cache).to.equal(stations);
                     assert.ok(client.lastModified != 0);
                     lastModified = client.lastModified;
 
@@ -158,7 +158,7 @@ describe('CachedBikeSampaClient', function() {
                     client.getAll(function(err, stations) {
                         if(err) done(err);
                         else{
-                            assert.equal(1, Object.keys(stations).length);
+                            expect(Object.keys(stations).length).to.equal(1);
                             assert.ok(stations['1']);
                             expect(stations['1']).to.deep.equal({
                                 "stationId":"1",
@@ -172,7 +172,7 @@ describe('CachedBikeSampaClient', function() {
                                 "freePositions":11,
                                 "availableBikes":1
                             });
-                            assert.equal(stations, client.cache);
+                            expect(client.cache).to.equal(stations);
                             assert.ok(lastModified < client.lastModified);
                             done();
                         }
