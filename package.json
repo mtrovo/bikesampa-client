@@ -6,7 +6,8 @@
   "devDependencies": {
     "mocha": "1.8.1",
     "nock": "0.42.1",
-    "underscore": "^1.8.2"
+    "underscore": "^1.8.2",
+    "chai": "~2.1.1"
   },
   "scripts": {
     "test": "mocha --reporter spec --timeout 4000",
