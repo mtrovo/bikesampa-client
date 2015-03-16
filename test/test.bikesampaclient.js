@@ -124,6 +124,27 @@ describe('BikeSampaClient', function () {
         "statusEstacao": null
       }]);
     });
+    it('should identify all stations availables', function () {
+      var func = fs.readFileSync(__dirname + '/html-cases/manystations.expectation.js', {encoding: "UTF-8"}),
+        stations = BikeSampaClient._buildObjectsFromStringFunc(func);
+
+      expect(stations.length).to.equal(253);
+      expect(stations.pop()).to.deep.equal({
+        "Endereco": "Rua Artur de Azevedo 1760",
+        "IdEstacao": "285",
+        "Latitude": "-23.566085",
+        "Longitude": "-46.687460",
+        "Nome": "Artur de Azevedo",
+        "QtdBicicletas": "0",
+        "QtdPosicaoLivre": "12",
+        "Referencia": "",
+        "StatusOnline": "I",
+        "StatusOperacao": "EI",
+        "estacaoIntegradaBU": "S",
+        "qtdBicicletasDisponiveisEstacao": "0",
+        "statusEstacao": null
+      });
+    });
   });
 
   describe('@_sliceStationsInfoFromHtml', function () {

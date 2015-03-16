@@ -3032,5 +3032,3 @@ exibirEstacaMapa("-23.566085",
 "0",
 "12",
 "Rua Artur de Azevedo 1760");
-
-}
