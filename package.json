@@ -23,6 +23,7 @@
   ],
   "license": "Apache 2",
   "dependencies": {
-    "request": "^2.51.0"
+    "request": "^2.51.0",
+    "vm": "0.0.1"
   }
 }
