@@ -1,6 +1,6 @@
 {
   "name": "bikesampa-client",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "API for BikeSampa stations usage and location",
   "main": "./lib/bikesampaclient.js",
   "devDependencies": {
