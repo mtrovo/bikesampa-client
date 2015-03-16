@@ -6,7 +6,6 @@ var BikeSampaClient = require('../lib/bikesampaclient.js').BikeSampaClient,
 
 describe('BikeSampaClient', function () {
   describe('!integration', function () {
-    BikeSampaClient.debug = true;
     var bikesp = new BikeSampaClient({debug: false});
     it('should load stations', function (done) {
       bikesp.getAll(function (err, stations){

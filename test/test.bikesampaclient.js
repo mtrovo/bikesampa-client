@@ -6,7 +6,8 @@ var nock = require('nock'),
   fs = require('fs'),
   _ = require('underscore'),
   path = require('path'),
-  expect = require('chai').expect;
+  expect = require('chai').expect,
+  iconv = require('iconv');
 
 var client;
 
@@ -135,6 +136,31 @@ describe('BikeSampaClient', function () {
         "Latitude": "-23.566085",
         "Longitude": "-46.687460",
         "Nome": "Artur de Azevedo",
+        "QtdBicicletas": "0",
+        "QtdPosicaoLivre": "12",
+        "Referencia": "",
+        "StatusOnline": "I",
+        "StatusOperacao": "EI",
+        "estacaoIntegradaBU": "S",
+        "qtdBicicletasDisponiveisEstacao": "0",
+        "statusEstacao": null
+      });
+    });
+    it('should identify accents correctly', function () {
+      var func = fs.readFileSync(__dirname + '/html-cases/accents.js');
+
+      // convert buffer
+      var ic = new iconv.Iconv('iso-8859-1', 'utf-8');
+      func = ic.convert(func).toString('utf-8');
+      
+      var stations = BikeSampaClient._buildObjectsFromStringFunc(func);
+
+      expect(stations[248]).to.deep.equal({
+        "Endereco": "Praça Horàcio Sabino 161",
+        "IdEstacao": "281",
+        "Latitude": "-23.550679",
+        "Longitude": "-46.684531",
+        "Nome": "Praça Horàcio Sabino",
         "QtdBicicletas": "0",
         "QtdPosicaoLivre": "12",
         "Referencia": "",
