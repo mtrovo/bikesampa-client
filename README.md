@@ -22,7 +22,7 @@ Cliente que controla o acesso a API
 #### #getAll(callback)
 Funçao assíncrona que retorna o estado atual de todas as estaçoes disponiveis.
 
-```
+``` javascript
 bikesampa.getAll(function(err, stations) {
 	if(err) {
 		// error handling
@@ -35,7 +35,7 @@ bikesampa.getAll(function(err, stations) {
 No exemplo `err` é uma variável utilizada para mostrar se ocorreu algum erro na chamada e `stations` é um array contendo as informaçoes de todas as estacoes disponíveis.
 
 Cada estacao segue o seguinte formato:
-```
+``` javascript
 {
   "stationId": "143",
   "name": "Mackenzie",
@@ -68,7 +68,7 @@ Cada estacao segue o seguinte formato:
 #### #getStation(id, callback)
 Função assíncrona que retorna a estação com o `id` passado como argumento de entrada.
 
-```
+``` javascript
 bikesampa.getStation('143', function(err, station) {
 	if(err) {
 		// error handling
@@ -92,14 +92,14 @@ Essa classe se utiliza da mesma API pública da classe `BikeSampaClient` porém 
 Cria uma nova instância de `CachedBikeSampaClient` e aceita um dicionário `options` para customização de parâmetros da instância. Parâmetros aceitos atualmente são:
 * ttl: tempo de vida em segundos dos dados em memória até que ele seja expirado e uma nova consulta externa seja feita.
 
-```
+``` javascript
 var bikesampa = new CachedBikeSampaClient({ttl: 60});
 ```
 
 No exemplo acima uma nova instância foi criada com um tempo de vida dos dados de um minuto (60 segs).
 
 ## Exemplo
-```
+``` javascript
 var CachedBikeSampaClient = require("BikeSampaClient").CachedBikeSampaClient;
 var bikesampa = new CachedBikeSampaClient({ttl:60});
 
